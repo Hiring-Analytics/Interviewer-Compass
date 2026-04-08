@@ -1,210 +1,95 @@
-﻿<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Interviewer Compass</title>
+﻿<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Interviewer Compass</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:"Segoe UI",system-ui,sans-serif;background:#0f172a;color:#e2e8f0;min-height:100vh}
-.ctr{max-width:1400px;margin:0 auto;padding:20px}
-header{text-align:center;padding:30px 0 20px;border-bottom:1px solid #334155;margin-bottom:24px}
-header h1{font-size:28px;color:#38bdf8;margin-bottom:6px}
-header p{color:#94a3b8;font-size:14px}
-.uz{border:2px dashed #475569;border-radius:12px;padding:40px;text-align:center;margin-bottom:24px;cursor:pointer;transition:all .2s}
-.uz:hover,.uz.dg{border-color:#38bdf8;background:#1e293b}
-.uz input{display:none}
-.uz h3{color:#38bdf8;margin-bottom:8px}
-.uz p{color:#94a3b8;font-size:13px}
-.bms{background:#1e293b;border-radius:12px;padding:20px;margin-bottom:24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
-.bmi label{display:block;font-size:13px;color:#94a3b8;margin-bottom:6px}
-.bmi .sr{display:flex;align-items:center;gap:10px}
-.bmi input[type=range]{flex:1;accent-color:#38bdf8}
-.bmi input[type=number]{width:70px;background:#0f172a;border:1px solid #334155;color:#38bdf8;padding:4px 8px;border-radius:6px;font-size:14px;text-align:center}
-.tabs{display:flex;gap:4px;margin-bottom:0;flex-wrap:wrap}
-.tab{padding:10px 18px;border-radius:8px 8px 0 0;cursor:pointer;font-size:13px;font-weight:600;background:#1e293b;color:#94a3b8;border:1px solid #334155;border-bottom:none;transition:all .2s}
-.tab.active{background:#334155;color:#38bdf8}
-.badge{font-size:11px;padding:1px 7px;border-radius:10px;margin-left:6px;color:#fff}
-.bgr{background:#ef4444}.bgg{background:#22c55e}.bgy{background:#eab308;color:#000}.bgb{background:#3b82f6}.bgp{background:#8b5cf6}
-.pnl{display:none;background:#1e293b;border-radius:0 12px 12px 12px;padding:20px;border:1px solid #334155}
-.pnl.active{display:block}
-table{width:100%;border-collapse:collapse;font-size:13px}
-th{background:#334155;color:#94a3b8;padding:10px 12px;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.5px;position:sticky;top:0;z-index:1}
-td{padding:8px 12px;border-bottom:1px solid #0f172a}
-tr:hover td{background:#334155}
-.sy{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600;background:#065f46;color:#6ee7b7}
-.sn{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600;background:#7f1d1d;color:#fca5a5}
-.te{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600;background:#065f46;color:#6ee7b7}
-.tm{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600;background:#1e3a5f;color:#93c5fd}
-.tb{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600;background:#7f1d1d;color:#fca5a5}
-.sg{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-bottom:24px}
-.sc{background:#0f172a;border-radius:10px;padding:16px;text-align:center;border:1px solid #334155}
-.sc .n{font-size:32px;font-weight:700;color:#38bdf8}
-.sc .l{font-size:12px;color:#94a3b8;margin-top:4px}
-.eb{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap}
-.btn{padding:8px 16px;border:none;border-radius:6px;cursor:pointer;font-size:13px;font-weight:600;transition:all .2s}
-.bbl{background:#3b82f6;color:#fff}.bbl:hover{background:#2563eb}
-.bgn{background:#22c55e;color:#fff}.bgn:hover{background:#16a34a}
-.brd{background:#ef4444;color:#fff}.brd:hover{background:#dc2626}
-.bpu{background:#8b5cf6;color:#fff}.bpu:hover{background:#7c3aed}
-.hid{display:none}
-.tw{max-height:500px;overflow:auto;border-radius:8px}
-.si{background:#0f172a;border:1px solid #334155;color:#e2e8f0;padding:8px 12px;border-radius:6px;font-size:13px;width:250px;margin-bottom:12px}
-.si::placeholder{color:#64748b}
-.mf select{background:#0f172a;border:1px solid #334155;color:#e2e8f0;padding:8px 12px;border-radius:6px;font-size:13px}
-.mf{margin-bottom:16px}
-</style>
-</head>
-<body>
-<div class="ctr">
+*{box-sizing:border-box;margin:0;padding:0}body{font-family:"Segoe UI",system-ui,sans-serif;background:#0f172a;color:#e2e8f0;min-height:100vh}.ct{max-width:1400px;margin:0 auto;padding:20px}header{text-align:center;padding:30px 0 20px;border-bottom:1px solid #334155;margin-bottom:24px}header h1{font-size:28px;color:#38bdf8;margin-bottom:6px}header p{color:#94a3b8;font-size:14px}.uz{border:2px dashed #475569;border-radius:12px;padding:40px;text-align:center;margin-bottom:24px;cursor:pointer;transition:all .2s}.uz:hover,.uz.dg{border-color:#38bdf8;background:#1e293b}.uz input{display:none}.uz h3{color:#38bdf8;margin-bottom:8px}.uz p{color:#94a3b8;font-size:13px}.bms{background:#1e293b;border-radius:12px;padding:20px;margin-bottom:24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}.bmi label{display:block;font-size:13px;color:#94a3b8;margin-bottom:6px}.bmi .sr{display:flex;align-items:center;gap:10px}.bmi input[type=range]{flex:1;accent-color:#38bdf8}.bmi input[type=number]{width:70px;background:#0f172a;border:1px solid #334155;color:#38bdf8;padding:4px 8px;border-radius:6px;font-size:14px;text-align:center}.tabs{display:flex;gap:4px;margin-bottom:0;flex-wrap:wrap}.tab{padding:10px 18px;border-radius:8px 8px 0 0;cursor:pointer;font-size:13px;font-weight:600;background:#1e293b;color:#94a3b8;border:1px solid #334155;border-bottom:none;transition:all .2s}.tab.act{background:#334155;color:#38bdf8}.bdg{font-size:11px;padding:1px 7px;border-radius:10px;margin-left:6px;color:#fff}.br{background:#ef4444}.bg{background:#22c55e}.by{background:#eab308;color:#000}.bb{background:#3b82f6}.bp{background:#8b5cf6}.pn{display:none;background:#1e293b;border-radius:0 12px 12px 12px;padding:20px;border:1px solid #334155}.pn.act{display:block}table{width:100%;border-collapse:collapse;font-size:13px}th{background:#334155;color:#94a3b8;padding:10px 12px;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.5px;position:sticky;top:0;z-index:1}td{padding:8px 12px;border-bottom:1px solid #0f172a}tr:hover td{background:#334155}.sy{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600;background:#065f46;color:#6ee7b7}.sn{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600;background:#7f1d1d;color:#fca5a5}.te{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600;background:#065f46;color:#6ee7b7}.tm{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600;background:#1e3a5f;color:#93c5fd}.tb{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600;background:#7f1d1d;color:#fca5a5}.sg{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-bottom:24px}.sc{background:#0f172a;border-radius:10px;padding:16px;text-align:center;border:1px solid #334155}.sc .n{font-size:32px;font-weight:700;color:#38bdf8}.sc .l{font-size:12px;color:#94a3b8;margin-top:4px}.eb{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap}.btn{padding:8px 16px;border:none;border-radius:6px;cursor:pointer;font-size:13px;font-weight:600;transition:all .2s}.bgn{background:#22c55e;color:#fff}.bgn:hover{background:#16a34a}.bpu{background:#8b5cf6;color:#fff}.bpu:hover{background:#7c3aed}.hid{display:none}.tw{max-height:500px;overflow:auto;border-radius:8px}.si{background:#0f172a;border:1px solid #334155;color:#e2e8f0;padding:8px 12px;border-radius:6px;font-size:13px;width:250px;margin-bottom:12px}.si::placeholder{color:#64748b}.mf select{background:#0f172a;border:1px solid #334155;color:#e2e8f0;padding:8px 12px;border-radius:6px;font-size:13px}.mf{margin-bottom:16px}
+</style></head><body><div class="ct">
 <header><h1>Interviewer Compass</h1><p>Upload your Yardstick interviewer dataset to analyze certification, activity, and performance metrics</p></header>
 <div class="uz" id="dz"><input type="file" id="fi" accept=".csv,.xlsx,.xls"><h3>Drop your Yardstick export here or click to browse</h3><p>Supports CSV and Excel files</p></div>
 <div id="db" class="hid">
 <div class="bms">
-<div class="bmi"><label>Min Total Interviews (Active)</label><div class="sr"><input type="range" id="sMin" min="1" max="50" value="5"><input type="number" id="vMin" value="5" min="1" max="200"></div></div>
-<div class="bmi"><label>Min Interviews to Exceed</label><div class="sr"><input type="range" id="sExc" min="5" max="100" value="20"><input type="number" id="vExc" value="20" min="1" max="500"></div></div>
+<div class="bmi"><label>Interview Threshold (Exceeding vs Below)</label><div class="sr"><input type="range" id="sInt" min="1" max="100" value="10"><input type="number" id="vInt" value="10" min="1" max="500"></div></div>
 <div class="bmi"><label>Min OS Shadows for Solo Ready</label><div class="sr"><input type="range" id="sSh" min="1" max="20" value="5"><input type="number" id="vSh" value="5" min="1" max="50"></div></div>
-<div class="bmi"><label>Inactivity Threshold (tenure days)</label><div class="sr"><input type="range" id="sIn" min="30" max="730" value="365"><input type="number" id="vIn" value="365" min="30" max="1000"></div></div>
 </div>
 <div class="mf"><label style="color:#94a3b8;font-size:13px;margin-right:8px">Filter by Manager:</label><select id="ms"><option value="">All Managers</option></select></div>
-<div class="tabs" id="tb"></div>
-<div id="pn"></div>
-</div>
-</div>
+<div class="tabs" id="tb"></div><div id="pn"></div>
+</div></div>
 <script>
-let R=[];const G=id=>document.getElementById(id);
-function pct(a,b){return b?(a/b*100).toFixed(1)+'%':'0%'}
-['Min','Exc','Sh','In'].forEach(k=>{const s=G('s'+k),v=G('v'+k);s.oninput=()=>{v.value=s.value;run()};v.oninput=()=>{s.value=v.value;run()}});
+let R=[];const G=id=>document.getElementById(id);function pct(a,b){return b?(a/b*100).toFixed(1)+'%':'0%'}
+const sInt=G('sInt'),vInt=G('vInt'),sSh=G('sSh'),vSh=G('vSh');
+sInt.oninput=()=>{vInt.value=sInt.value;run()};vInt.oninput=()=>{sInt.value=vInt.value;run()};
+sSh.oninput=()=>{vSh.value=sSh.value;run()};vSh.oninput=()=>{sSh.value=vSh.value;run()};
 const dz=G('dz'),fi=G('fi');
-dz.ondragover=e=>{e.preventDefault();dz.classList.add('dg')};
-dz.ondragleave=()=>dz.classList.remove('dg');
+dz.ondragover=e=>{e.preventDefault();dz.classList.add('dg')};dz.ondragleave=()=>dz.classList.remove('dg');
 dz.ondrop=e=>{e.preventDefault();dz.classList.remove('dg');load(e.dataTransfer.files[0])};
-fi.onchange=()=>{if(fi.files[0])load(fi.files[0])};
-dz.onclick=e=>{if(e.target.tagName!=='INPUT')fi.click()};
-
-function load(f){
-  const ext=f.name.split('.').pop().toLowerCase();
-  if(ext==='csv'){Papa.parse(f,{header:true,skipEmptyLines:true,complete:r=>{R=clean(r.data);init()}})}
-  else{const rd=new FileReader();rd.onload=e=>{const wb=XLSX.read(e.target.result,{type:'array'});R=clean(XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]));init()};rd.readAsArrayBuffer(f)}
-}
-
-function clean(d){
-  return d.map(r=>({
-    lo:(r['Employee Login']||'').trim(),nm:(r['Employee Name']||'').trim(),
-    ti:(r['Job Classification Title']||'').trim(),lv:parseInt(r['Job Level'])||0,
-    sv:(r['Supervisor Name']||'').trim(),tn:parseInt(r['Tenure Since Last Hire'])||0,
-    mg:(r['MGHD Completed']||'').trim().toLowerCase()==='yes',
-    sr:(r['Solo ready interviewer']||'').trim().toLowerCase()==='yes',
-    ac:(r['Active Interviewer']||'').trim().toLowerCase()==='yes',
-    os:parseFloat(r['On Site Accepted Count'])||0,ps:parseFloat(r['Phone Screen Accepted Count'])||0
-  })).filter(r=>r.lo)
-}
-
-function init(){
-  G('db').classList.remove('hid');
-  const mgrs=[...new Set(R.map(r=>r.sv))].sort();
-  const s=G('ms');s.innerHTML='<option value="">All Managers</option>'+mgrs.map(m=>'<option value="'+m+'">'+m+'</option>').join('');
-  s.onchange=()=>run();run()
-}
+fi.onchange=()=>{if(fi.files[0])load(fi.files[0])};dz.onclick=e=>{if(e.target.tagName!=='INPUT')fi.click()};
+function load(f){const ext=f.name.split('.').pop().toLowerCase();if(ext==='csv'){Papa.parse(f,{header:true,skipEmptyLines:true,complete:r=>{R=clean(r.data);init()}})}else{const rd=new FileReader();rd.onload=e=>{const wb=XLSX.read(e.target.result,{type:'array'});R=clean(XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]));init()};rd.readAsArrayBuffer(f)}}
+function clean(d){return d.map(r=>({lo:(r['Employee Login']||'').trim(),nm:(r['Employee Name']||'').trim(),ti:(r['Job Classification Title']||'').trim(),lv:parseInt(r['Job Level'])||0,sv:(r['Supervisor Name']||'').trim(),tn:parseInt(r['Tenure Since Last Hire'])||0,mg:(r['MGHD Completed']||'').trim().toLowerCase()==='yes',sr:(r['Solo ready interviewer']||'').trim().toLowerCase()==='yes',ac:(r['Active Interviewer']||'').trim().toLowerCase()==='yes',os:parseFloat(r['On Site Accepted Count'])||0,ps:parseFloat(r['Phone Screen Accepted Count'])||0})).filter(r=>r.lo)}
+function init(){G('db').classList.remove('hid');const mgrs=[...new Set(R.map(r=>r.sv))].sort();const s=G('ms');s.innerHTML='<option value="">All Managers</option>'+mgrs.map(m=>'<option value="'+m+'">'+m+'</option>').join('');s.onchange=()=>run();run()}
 function run(){
-  const mi=+G('vMin').value,ei=+G('vExc').value,ms=+G('vSh').value,id=+G('vIn').value,mf=G('ms').value;
-  let D=mf?R.filter(r=>r.sv===mf):R;
-  const tot=D.length,cert=D.filter(r=>r.mg),solo=D.filter(r=>r.sr),actv=D.filter(r=>r.ac);
-  const nMG=D.filter(r=>!r.mg),nSH=D.filter(r=>r.mg&&!r.sr&&r.os<ms);
-  const dorm=D.filter(r=>r.mg&&r.sr&&!r.ac&&r.tn>=id);
-  const aC=D.filter(r=>r.mg&&r.ac);
+  const intTh=+G('vInt').value,shTh=+G('vSh').value,mf=G('ms').value;
+  let D=mf?R.filter(r=>r.sv===mf):R;const tot=D.length;
+  const cert=D.filter(r=>r.mg),notCert=D.filter(r=>!r.mg);
+  // Need Shadowing: MGHD yes + Solo Ready No + OS < shadow threshold
+  const nSH=D.filter(r=>r.mg&&!r.sr&&r.os<shTh);
+  // Dormant: MGHD yes + Solo Ready yes + Active No
+  const dorm=D.filter(r=>r.mg&&r.sr&&!r.ac);
+  // Active certified interviewers
+  const actCert=D.filter(r=>r.mg&&r.ac);
   const tt=r=>r.os+r.ps;
-  const bel=aC.filter(r=>tt(r)<mi),met=aC.filter(r=>tt(r)>=mi&&tt(r)<ei),exc=aC.filter(r=>tt(r)>=ei);
-  const tids=['summary','mghd','shadow','dormant','below','meeting','exceed','kpi','manager'];
-  const tabs=[
-    {id:'summary',lb:'Executive Summary',bd:null,cl:''},
-    {id:'mghd',lb:'Need MGHD',bd:nMG.length,cl:'bgr'},
-    {id:'shadow',lb:'Need Shadowing',bd:nSH.length,cl:'bgy'},
-    {id:'dormant',lb:'Dormant',bd:dorm.length,cl:'bgr'},
-    {id:'below',lb:'Below Expectations',bd:bel.length,cl:'bgr'},
-    {id:'meeting',lb:'Meeting',bd:met.length,cl:'bgb'},
-    {id:'exceed',lb:'Exceeding',bd:exc.length,cl:'bgg'},
-    {id:'kpi',lb:'Full KPI Table',bd:aC.length,cl:'bgb'},
-    {id:'manager',lb:'Manager View',bd:null,cl:'bgp'}
-  ];
-  G('tb').innerHTML=tabs.map((t,i)=>'<div class=\"tab'+(i===0?' active':'')+'\" onclick=\"stab(\''+t.id+'\')\">'+ t.lb+(t.bd!==null?'<span class=\"badge '+t.cl+'\">'+t.bd+'</span>':'')+'</div>').join('');
+  // Single threshold: >= intTh = Exceeding, < intTh = Below
+  const exc=actCert.filter(r=>tt(r)>=intTh);
+  const bel=actCert.filter(r=>tt(r)<intTh);
+  const solo=D.filter(r=>r.sr),actv=D.filter(r=>r.ac);
+  const tids=['summary','notcert','shadow','dormant','exceed','below','kpi','manager'];
+  const tabs=[{id:'summary',lb:'Executive Summary',bd:null,cl:''},{id:'notcert',lb:'Need MGHD',bd:notCert.length,cl:'br'},{id:'shadow',lb:'Need Shadowing',bd:nSH.length,cl:'by'},{id:'dormant',lb:'Dormant',bd:dorm.length,cl:'br'},{id:'exceed',lb:'Exceeding',bd:exc.length,cl:'bg'},{id:'below',lb:'Below Expectations',bd:bel.length,cl:'br'},{id:'kpi',lb:'Full KPI Table',bd:actCert.length,cl:'bb'},{id:'manager',lb:'Manager View',bd:null,cl:'bp'}];
+  G('tb').innerHTML=tabs.map((t,i)=>'<div class="tab'+(i===0?' act':'')+'" onclick="stab(\''+t.id+'\')">'+t.lb+(t.bd!==null?'<span class="bdg '+t.cl+'">'+t.bd+'</span>':'')+'</div>').join('');
   let h='';
   // Summary
-  h+='<div class=\"pnl active\" id=\"p-summary\"><div class=\"eb\"><button class=\"btn bpu\" onclick=\"xsPDF()\">Export Summary PDF</button><button class=\"btn bgn\" onclick=\"xsXL()\">Export Summary Excel</button></div>';
-  h+='<div class=\"sg\">';
+  h+='<div class="pn act" id="p-summary"><div class="eb"><button class="btn bpu" onclick="xsPDF()">Export Summary PDF</button><button class="btn bgn" onclick="xsXL()">Export Summary Excel</button></div><div class="sg">';
   h+=sc(tot,'Total Interviewers')+sc(cert.length,'MGHD Certified ('+pct(cert.length,tot)+')')+sc(solo.length,'Solo Ready ('+pct(solo.length,tot)+')')+sc(actv.length,'Active ('+pct(actv.length,tot)+')');
-  h+=sc(nMG.length,'Need MGHD')+sc(nSH.length,'Need Shadowing')+sc(dorm.length,'Dormant')+sc(exc.length,'Exceeding')+sc(met.length,'Meeting')+sc(bel.length,'Below Expectations');
-  h+='</div><h3 style=\"color:#38bdf8;margin-bottom:12px\">Action Items</h3>';
-  h+='<table><thead><tr><th>Category</th><th>Count</th><th>Action Required</th></tr></thead><tbody>';
-  h+='<tr><td>Need MGHD</td><td>'+nMG.length+'</td><td>Enroll in MGHD certification training</td></tr>';
-  h+='<tr><td>Need Shadowing</td><td>'+nSH.length+'</td><td>Assign shadow interviews (need '+ms+'+ OS shadows)</td></tr>';
-  h+='<tr><td>Dormant</td><td>'+dorm.length+'</td><td>Re-engage - certified but inactive '+id+'+ days tenure</td></tr>';
-  h+='<tr><td>Below Expectations</td><td>'+bel.length+'</td><td>Coach to increase interview participation</td></tr>';
+  h+=sc(notCert.length,'Need MGHD')+sc(nSH.length,'Need Shadowing')+sc(dorm.length,'Dormant')+sc(exc.length,'Exceeding (>='+intTh+')')+sc(bel.length,'Below (<'+intTh+')');
+  h+='</div><h3 style="color:#38bdf8;margin-bottom:12px">Action Items</h3><table><thead><tr><th>Category</th><th>Count</th><th>Action Required</th></tr></thead><tbody>';
+  h+='<tr><td>Need MGHD</td><td>'+notCert.length+'</td><td>Enroll in MGHD certification training</td></tr>';
+  h+='<tr><td>Need Shadowing</td><td>'+nSH.length+'</td><td>Assign onsite shadow interviews (need '+shTh+'+ OS shadows)</td></tr>';
+  h+='<tr><td>Dormant</td><td>'+dorm.length+'</td><td>Re-engage - certified and solo ready but not active</td></tr>';
+  h+='<tr><td>Below Expectations</td><td>'+bel.length+'</td><td>Coach to reach '+intTh+'+ total interviews</td></tr>';
   h+='</tbody></table></div>';
-  // MGHD panel
-  h+=mkPanel('mghd','Login,Name,Title,Level,Supervisor,Tenure',nMG.map(r=>[r.lo,r.nm,r.ti,r.lv,r.sv,r.tn]));
-  // Shadow panel
-  h+=mkPanel('shadow','Login,Name,Title,Supervisor,OS Shadows,PS Count',nSH.map(r=>[r.lo,r.nm,r.ti,r.sv,r.os,r.ps]));
-  // Dormant panel
-  h+=mkPanel('dormant','Login,Name,Title,Supervisor,Tenure,OS,PS',dorm.map(r=>[r.lo,r.nm,r.ti,r.sv,r.tn,r.os,r.ps]));
+  // Need MGHD
+  h+=mkP('notcert','Login,Name,Title,Level,Supervisor,Tenure',notCert.map(r=>[r.lo,r.nm,r.ti,r.lv,r.sv,r.tn]));
+  // Need Shadowing
+  h+=mkP('shadow','Login,Name,Title,Supervisor,Solo Ready,OS Shadows,PS Count',nSH.map(r=>[r.lo,r.nm,r.ti,r.sv,r.sr?'Yes':'No',r.os,r.ps]));
+  // Dormant
+  h+=mkP('dormant','Login,Name,Title,Supervisor,Solo Ready,Active,OS,PS',dorm.map(r=>[r.lo,r.nm,r.ti,r.sv,'Yes','No',r.os,r.ps]));
+  // Exceeding
+  h+=mkTP('exceed','Exceeding',exc);
   // Below
-  h+=mkTierPanel('below','Below',bel,mi,ei);
-  // Meeting
-  h+=mkTierPanel('meeting','Meeting',met,mi,ei);
-  // Exceed
-  h+=mkTierPanel('exceed','Exceeding',exc,mi,ei);
+  h+=mkTP('below','Below',bel);
   // Full KPI
-  h+='<div class=\"pnl\" id=\"p-kpi\"><div class=\"eb\"><button class=\"btn bgn\" onclick=\"xtXL(\'kpi\')\">Export Excel</button><button class=\"btn bpu\" onclick=\"xtPDF(\'kpi\')\">Export PDF</button></div>';
-  h+='<input class=\"si\" placeholder=\"Search...\" oninput=\"ft(\'t-kpi\',this.value)\">';
-  h+='<div class=\"tw\"><table id=\"t-kpi\"><thead><tr><th>Login</th><th>Name</th><th>Title</th><th>Level</th><th>Supervisor</th><th>MGHD</th><th>Solo</th><th>Active</th><th>OS</th><th>PS</th><th>Total</th><th>Tier</th></tr></thead><tbody>';
-  aC.forEach(r=>{const t=r.os+r.ps;const tier=t>=ei?'Exceeding':t>=mi?'Meeting':'Below';const c=tier==='Exceeding'?'te':tier==='Meeting'?'tm':'tb';
-    h+='<tr><td>'+r.lo+'</td><td>'+r.nm+'</td><td>'+r.ti+'</td><td>'+r.lv+'</td><td>'+r.sv+'</td><td><span class=\"sy\">Yes</span></td><td><span class=\"'+(r.sr?'sy':'sn')+'\">'+(r.sr?'Yes':'No')+'</span></td><td><span class=\"sy\">Yes</span></td><td>'+r.os+'</td><td>'+r.ps+'</td><td>'+t+'</td><td><span class=\"'+c+'\">'+tier+'</span></td></tr>'});
+  h+='<div class="pn" id="p-kpi"><div class="eb"><button class="btn bgn" onclick="xtXL(\'kpi\')">Export Excel</button><button class="btn bpu" onclick="xtPDF(\'kpi\')">Export PDF</button></div><input class="si" placeholder="Search..." oninput="ft(\'t-kpi\',this.value)"><div class="tw"><table id="t-kpi"><thead><tr><th>Login</th><th>Name</th><th>Title</th><th>Level</th><th>Supervisor</th><th>MGHD</th><th>Solo</th><th>Active</th><th>OS</th><th>PS</th><th>Total</th><th>Tier</th></tr></thead><tbody>';
+  actCert.forEach(r=>{const t=r.os+r.ps;const tier=t>=intTh?'Exceeding':'Below';const c=t>=intTh?'te':'tb';h+='<tr><td>'+r.lo+'</td><td>'+r.nm+'</td><td>'+r.ti+'</td><td>'+r.lv+'</td><td>'+r.sv+'</td><td><span class="sy">Yes</span></td><td><span class="'+(r.sr?'sy':'sn')+'">'+(r.sr?'Yes':'No')+'</span></td><td><span class="sy">Yes</span></td><td>'+r.os+'</td><td>'+r.ps+'</td><td>'+t+'</td><td><span class="'+c+'">'+tier+'</span></td></tr>'});
   h+='</tbody></table></div></div>';
   // Manager View
   const md={};R.forEach(r=>{if(!md[r.sv])md[r.sv]=[];md[r.sv].push(r)});
-  h+='<div class=\"pnl\" id=\"p-manager\"><div class=\"eb\"><button class=\"btn bpu\" onclick=\"xmPDF()\">Export All Manager Reports PDF</button><button class=\"btn bgn\" onclick=\"xmXL()\">Export All Manager Reports Excel</button></div><div class=\"tw\" style=\"max-height:none\">';
-  Object.keys(md).sort().forEach(mg=>{
-    const tm=md[mg],cr=tm.filter(r=>r.mg).length,sl=tm.filter(r=>r.sr).length,ac=tm.filter(r=>r.ac).length;
-    h+='<div style=\"margin-bottom:24px;background:#0f172a;border-radius:8px;padding:16px;border:1px solid #334155\">';
-    h+='<h3 style=\"color:#38bdf8;margin-bottom:8px\">'+mg+' <span style=\"color:#94a3b8;font-size:12px\">('+tm.length+' reports)</span></h3>';
-    h+='<div style=\"display:flex;gap:16px;margin-bottom:12px;flex-wrap:wrap;font-size:12px;color:#94a3b8\"><span>Certified: '+cr+'/'+tm.length+'</span><span>Solo Ready: '+sl+'/'+tm.length+'</span><span>Active: '+ac+'/'+tm.length+'</span></div>';
-    h+='<table><thead><tr><th>Name</th><th>MGHD</th><th>Solo</th><th>Active</th><th>OS</th><th>PS</th><th>Total</th><th>Tier</th></tr></thead><tbody>';
-    tm.forEach(r=>{const t=r.os+r.ps;const tier=!r.mg||!r.sr||!r.ac?'-':t>=ei?'Exceeding':t>=mi?'Meeting':'Below';const c=tier==='Exceeding'?'te':tier==='Meeting'?'tm':tier==='Below'?'tb':'';
-      h+='<tr><td>'+r.nm+'</td><td><span class=\"'+(r.mg?'sy':'sn')+'\">'+(r.mg?'Yes':'No')+'</span></td><td><span class=\"'+(r.sr?'sy':'sn')+'\">'+(r.sr?'Yes':'No')+'</span></td><td><span class=\"'+(r.ac?'sy':'sn')+'\">'+(r.ac?'Yes':'No')+'</span></td><td>'+r.os+'</td><td>'+r.ps+'</td><td>'+t+'</td><td>'+(c?'<span class=\"'+c+'\">'+tier+'</span>':tier)+'</td></tr>'});
+  h+='<div class="pn" id="p-manager"><div class="eb"><button class="btn bpu" onclick="xmPDF()">Export All Manager Reports PDF</button><button class="btn bgn" onclick="xmXL()">Export All Manager Reports Excel</button></div><div class="tw" style="max-height:none">';
+  Object.keys(md).sort().forEach(mg=>{const tm=md[mg],cr=tm.filter(r=>r.mg).length,sl=tm.filter(r=>r.sr).length,ac=tm.filter(r=>r.ac).length;
+    h+='<div style="margin-bottom:24px;background:#0f172a;border-radius:8px;padding:16px;border:1px solid #334155"><h3 style="color:#38bdf8;margin-bottom:8px">'+mg+' <span style="color:#94a3b8;font-size:12px">('+tm.length+' reports)</span></h3><div style="display:flex;gap:16px;margin-bottom:12px;flex-wrap:wrap;font-size:12px;color:#94a3b8"><span>Certified: '+cr+'/'+tm.length+'</span><span>Solo Ready: '+sl+'/'+tm.length+'</span><span>Active: '+ac+'/'+tm.length+'</span></div><table><thead><tr><th>Name</th><th>MGHD</th><th>Solo</th><th>Active</th><th>OS</th><th>PS</th><th>Total</th><th>Tier</th></tr></thead><tbody>';
+    tm.forEach(r=>{const t=r.os+r.ps;const tier=!r.mg||!r.ac?'-':t>=intTh?'Exceeding':'Below';const c=tier==='Exceeding'?'te':tier==='Below'?'tb':'';
+      h+='<tr><td>'+r.nm+'</td><td><span class="'+(r.mg?'sy':'sn')+'">'+(r.mg?'Yes':'No')+'</span></td><td><span class="'+(r.sr?'sy':'sn')+'">'+(r.sr?'Yes':'No')+'</span></td><td><span class="'+(r.ac?'sy':'sn')+'">'+(r.ac?'Yes':'No')+'</span></td><td>'+r.os+'</td><td>'+r.ps+'</td><td>'+t+'</td><td>'+(c?'<span class="'+c+'">'+tier+'</span>':tier)+'</td></tr>'});
     h+='</tbody></table></div>'});
   h+='</div></div>';
-  G('pn').innerHTML=h
-}
-function sc(n,l){return '<div class=\"sc\"><div class=\"n\">'+n+'</div><div class=\"l\">'+l+'</div></div>'}
-function mkPanel(id,hdrs,rows){
-  let h='<div class=\"pnl\" id=\"p-'+id+'\"><div class=\"eb\"><button class=\"btn bgn\" onclick=\"xtXL(\''+id+'\')\">Export Excel</button><button class=\"btn bpu\" onclick=\"xtPDF(\''+id+'\')\">Export PDF</button></div>';
-  h+='<input class=\"si\" placeholder=\"Search...\" oninput=\"ft(\'t-'+id+'\',this.value)\">';
-  h+='<div class=\"tw\"><table id=\"t-'+id+'\"><thead><tr>'+hdrs.split(',').map(x=>'<th>'+x+'</th>').join('')+'</tr></thead><tbody>';
-  rows.forEach(r=>{h+='<tr>'+r.map(c=>'<td>'+c+'</td>').join('')+'</tr>'});
-  return h+'</tbody></table></div></div>'
-}
-function mkTierPanel(id,label,data,mi,ei){
-  let h='<div class=\"pnl\" id=\"p-'+id+'\"><div class=\"eb\"><button class=\"btn bgn\" onclick=\"xtXL(\''+id+'\')\">Export Excel</button><button class=\"btn bpu\" onclick=\"xtPDF(\''+id+'\')\">Export PDF</button></div>';
-  h+='<input class=\"si\" placeholder=\"Search...\" oninput=\"ft(\'t-'+id+'\',this.value)\">';
-  h+='<div class=\"tw\"><table id=\"t-'+id+'\"><thead><tr><th>Login</th><th>Name</th><th>Title</th><th>Supervisor</th><th>OS</th><th>PS</th><th>Total</th><th>Tier</th></tr></thead><tbody>';
-  const c=label==='Exceeding'?'te':label==='Meeting'?'tm':'tb';
-  data.forEach(r=>{const t=r.os+r.ps;h+='<tr><td>'+r.lo+'</td><td>'+r.nm+'</td><td>'+r.ti+'</td><td>'+r.sv+'</td><td>'+r.os+'</td><td>'+r.ps+'</td><td>'+t+'</td><td><span class=\"'+c+'\">'+label+'</span></td></tr>'});
-  return h+'</tbody></table></div></div>'
-}
-function stab(id){
-  const tids=['summary','mghd','shadow','dormant','below','meeting','exceed','kpi','manager'];
-  document.querySelectorAll('.tab').forEach((t,i)=>{t.classList.toggle('active',tids[i]===id)});
-  document.querySelectorAll('.pnl').forEach((p,i)=>{p.classList.toggle('active',tids[i]===id)})
-}
+  G('pn').innerHTML=h}
+function sc(n,l){return '<div class="sc"><div class="n">'+n+'</div><div class="l">'+l+'</div></div>'}
+function mkP(id,hdrs,rows){let h='<div class="pn" id="p-'+id+'"><div class="eb"><button class="btn bgn" onclick="xtXL(\''+id+'\')">Export Excel</button><button class="btn bpu" onclick="xtPDF(\''+id+'\')">Export PDF</button></div><input class="si" placeholder="Search..." oninput="ft(\'t-'+id+'\',this.value)"><div class="tw"><table id="t-'+id+'"><thead><tr>'+hdrs.split(',').map(x=>'<th>'+x+'</th>').join('')+'</tr></thead><tbody>';rows.forEach(r=>{h+='<tr>'+r.map(c=>'<td>'+c+'</td>').join('')+'</tr>'});return h+'</tbody></table></div></div>'}
+function mkTP(id,label,data){const intTh=+G('vInt').value;let h='<div class="pn" id="p-'+id+'"><div class="eb"><button class="btn bgn" onclick="xtXL(\''+id+'\')">Export Excel</button><button class="btn bpu" onclick="xtPDF(\''+id+'\')">Export PDF</button></div><input class="si" placeholder="Search..." oninput="ft(\'t-'+id+'\',this.value)"><div class="tw"><table id="t-'+id+'"><thead><tr><th>Login</th><th>Name</th><th>Title</th><th>Supervisor</th><th>OS</th><th>PS</th><th>Total</th><th>Tier</th></tr></thead><tbody>';const c=label==='Exceeding'?'te':'tb';data.forEach(r=>{const t=r.os+r.ps;h+='<tr><td>'+r.lo+'</td><td>'+r.nm+'</td><td>'+r.ti+'</td><td>'+r.sv+'</td><td>'+r.os+'</td><td>'+r.ps+'</td><td>'+t+'</td><td><span class="'+c+'">'+label+'</span></td></tr>'});return h+'</tbody></table></div></div>'}
+function stab(id){const tids=['summary','notcert','shadow','dormant','exceed','below','kpi','manager'];document.querySelectorAll('.tab').forEach((t,i)=>{t.classList.toggle('act',tids[i]===id)});document.querySelectorAll('.pn').forEach((p,i)=>{p.classList.toggle('act',tids[i]===id)})}
 function ft(tid,q){const rows=document.getElementById(tid).querySelectorAll('tbody tr');const ql=q.toLowerCase();rows.forEach(r=>{r.style.display=r.textContent.toLowerCase().includes(ql)?'':'none'})}
 function xtXL(id){const t=document.getElementById('t-'+id);if(!t)return;const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,XLSX.utils.table_to_sheet(t),id);XLSX.writeFile(wb,'interviewer-compass-'+id+'.xlsx')}
 function xtPDF(id){const t=document.getElementById('t-'+id);if(!t)return;const{jsPDF}=window.jspdf;const d=new jsPDF({orientation:'landscape'});d.setFontSize(16);d.text('Interviewer Compass - '+id.toUpperCase(),14,15);d.setFontSize(10);d.text('Generated: '+new Date().toLocaleDateString(),14,22);d.autoTable({html:t,startY:28,styles:{fontSize:8},headStyles:{fillColor:[56,189,248]}});d.save('interviewer-compass-'+id+'.pdf')}
 function xsPDF(){const{jsPDF}=window.jspdf;const d=new jsPDF();d.setFontSize(20);d.setTextColor(56,189,248);d.text('Interviewer Compass - Executive Summary',14,20);d.setFontSize(10);d.setTextColor(100);d.text('Generated: '+new Date().toLocaleDateString(),14,28);const cards=document.querySelectorAll('#p-summary .sc');let y=38;d.setFontSize(12);d.setTextColor(0);cards.forEach(c=>{d.text(c.querySelector('.l').textContent+': '+c.querySelector('.n').textContent,14,y);y+=8});y+=8;d.setFontSize(14);d.setTextColor(56,189,248);d.text('Action Items',14,y);y+=4;const at=document.querySelector('#p-summary table');if(at)d.autoTable({html:at,startY:y,styles:{fontSize:9},headStyles:{fillColor:[56,189,248]}});d.save('interviewer-compass-summary.pdf')}
 function xsXL(){const wb=XLSX.utils.book_new();const cards=document.querySelectorAll('#p-summary .sc');const sd=[];cards.forEach(c=>{sd.push({Metric:c.querySelector('.l').textContent,Value:c.querySelector('.n').textContent})});XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(sd),'Summary');const at=document.querySelector('#p-summary table');if(at)XLSX.utils.book_append_sheet(wb,XLSX.utils.table_to_sheet(at),'Action Items');XLSX.writeFile(wb,'interviewer-compass-summary.xlsx')}
-function xmPDF(){const{jsPDF}=window.jspdf;const d=new jsPDF({orientation:'landscape'});const md={};R.forEach(r=>{if(!md[r.sv])md[r.sv]=[];md[r.sv].push(r)});const mi=+G('vMin').value,ei=+G('vExc').value;let first=true;Object.keys(md).sort().forEach(mg=>{if(!first)d.addPage();first=false;const tm=md[mg];d.setFontSize(16);d.setTextColor(56,189,248);d.text('Manager: '+mg,14,15);d.setFontSize(10);d.setTextColor(100);d.text('Team: '+tm.length+' | Certified: '+tm.filter(r=>r.mg).length+' | Solo: '+tm.filter(r=>r.sr).length+' | Active: '+tm.filter(r=>r.ac).length,14,22);const rows=tm.map(r=>{const t=r.os+r.ps;const tier=!r.mg||!r.sr||!r.ac?'-':t>=ei?'Exceeding':t>=mi?'Meeting':'Below';return[r.nm,r.mg?'Yes':'No',r.sr?'Yes':'No',r.ac?'Yes':'No',r.os,r.ps,t,tier]});d.autoTable({startY:28,head:[['Name','MGHD','Solo','Active','OS','PS','Total','Tier']],body:rows,styles:{fontSize:8},headStyles:{fillColor:[56,189,248]}})});d.save('interviewer-compass-all-managers.pdf')}
-function xmXL(){const wb=XLSX.utils.book_new();const md={};R.forEach(r=>{if(!md[r.sv])md[r.sv]=[];md[r.sv].push(r)});const mi=+G('vMin').value,ei=+G('vExc').value;Object.keys(md).sort().forEach(mg=>{const tm=md[mg];const rows=tm.map(r=>{const t=r.os+r.ps;const tier=!r.mg||!r.sr||!r.ac?'-':t>=ei?'Exceeding':t>=mi?'Meeting':'Below';return{Name:r.nm,MGHD:r.mg?'Yes':'No','Solo Ready':r.sr?'Yes':'No',Active:r.ac?'Yes':'No','On Site':r.os,'Phone Screen':r.ps,Total:t,Tier:tier}});XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(rows),mg.substring(0,31))});XLSX.writeFile(wb,'interviewer-compass-all-managers.xlsx')}
+function xmPDF(){const{jsPDF}=window.jspdf;const d=new jsPDF({orientation:'landscape'});const md={};R.forEach(r=>{if(!md[r.sv])md[r.sv]=[];md[r.sv].push(r)});const intTh=+G('vInt').value;let first=true;Object.keys(md).sort().forEach(mg=>{if(!first)d.addPage();first=false;const tm=md[mg];d.setFontSize(16);d.setTextColor(56,189,248);d.text('Manager: '+mg,14,15);d.setFontSize(10);d.setTextColor(100);d.text('Team: '+tm.length+' | Certified: '+tm.filter(r=>r.mg).length+' | Solo: '+tm.filter(r=>r.sr).length+' | Active: '+tm.filter(r=>r.ac).length,14,22);const rows=tm.map(r=>{const t=r.os+r.ps;const tier=!r.mg||!r.ac?'-':t>=intTh?'Exceeding':'Below';return[r.nm,r.mg?'Yes':'No',r.sr?'Yes':'No',r.ac?'Yes':'No',r.os,r.ps,t,tier]});d.autoTable({startY:28,head:[['Name','MGHD','Solo','Active','OS','PS','Total','Tier']],body:rows,styles:{fontSize:8},headStyles:{fillColor:[56,189,248]}})});d.save('interviewer-compass-all-managers.pdf')}
+function xmXL(){const wb=XLSX.utils.book_new();const md={};R.forEach(r=>{if(!md[r.sv])md[r.sv]=[];md[r.sv].push(r)});const intTh=+G('vInt').value;Object.keys(md).sort().forEach(mg=>{const tm=md[mg];const rows=tm.map(r=>{const t=r.os+r.ps;const tier=!r.mg||!r.ac?'-':t>=intTh?'Exceeding':'Below';return{Name:r.nm,MGHD:r.mg?'Yes':'No','Solo Ready':r.sr?'Yes':'No',Active:r.ac?'Yes':'No','On Site':r.os,'Phone Screen':r.ps,Total:t,Tier:tier}});XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(rows),mg.substring(0,31))});XLSX.writeFile(wb,'interviewer-compass-all-managers.xlsx')}
 </script></body></html>
